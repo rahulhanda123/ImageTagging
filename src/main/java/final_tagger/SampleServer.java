@@ -7,7 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse; 
+import javax.servlet.http.HttpServletResponse;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
 @WebServlet("/login")
@@ -26,7 +26,6 @@ public class SampleServer extends HttpServlet {
          
         // read form fields
         String searchQuery = request.getParameter("imagequery");
-       // String password = request.getParameter("password");
          
         System.out.println("username: " + searchQuery);
        // System.out.println("password: " + password);
@@ -35,20 +34,25 @@ public class SampleServer extends HttpServlet {
         
         Map<String, String> url = parser.getImageValues(searchQuery);
         String urlName = url.get("URL");
-        try {
-			String jsonObject = tagger.getImageTags(url.get("URL"));
-			downloader.downloadImage(searchQuery, urlName);
-		} catch (UnirestException e) {
+        
+        System.out.println("Trying to get tags");
+		String jsonObject="";
+		try {
+			jsonObject = tagger.getImageTags(url.get("URL"));
+			downloader.downloadImage(searchQuery, urlName, jsonObject);
+		} catch (UnirestException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
+		System.out.println("outside tags :"+jsonObject);
+		
+		
         // get response writer
         PrintWriter writer = response.getWriter();
-         
-        // build HTML code
         String htmlRespone = "<html>";
-        htmlRespone += "<h2>Your urlquery is: " + urlName + "<br/>";      
-        //htmlRespone += "Your password is: " + password + "</h2>";    
+        htmlRespone += "<h2>Your urlquery is: " + "The first google image for given query is :" + "</h2><br/>";      
+        htmlRespone += "<img src='" + "/final_tagger/image?imagequery="+searchQuery+ "' height=\"300\" width=\"300\"/><br/>";
+        htmlRespone += "<div>"+jsonObject+"</div>";
         htmlRespone += "</html>";
          
         // return response

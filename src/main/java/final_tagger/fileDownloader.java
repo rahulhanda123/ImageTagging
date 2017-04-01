@@ -2,20 +2,20 @@ package final_tagger;
 import java.io.*;
 import java.net.URL;
 
-/**
- * Created by rohin on 3/31/2017.
- */
+
 public class fileDownloader {
+	
 
-    public void downloadImage(String query, String searchquery) {
-
+    public String downloadImage(String query, String searchUrl, String jsonTags) {
+    	String saveInDirectory ="";
         try {
             String directory = query;
-            URL url = new URL(searchquery);
-            System.out.println("Insdie Image downloader "+url);
+            URL url = new URL(searchUrl);
+            System.out.println("Inside Image downloader "+url);
             InputStream in = new BufferedInputStream(url.openStream());
+            
             ByteArrayOutputStream out = new ByteArrayOutputStream();
-            byte[] buf = new byte[1024];
+            byte[] buf = new byte[8192];
             int n = 0;
             while (-1!=(n=in.read(buf)))
             {
@@ -26,8 +26,10 @@ public class fileDownloader {
             in.close();
             byte[] response = out.toByteArray();
 
-
-            File file = new File(directory);
+            saveInDirectory = "final_tagger/src/Images/"+directory;
+            System.out.println("Working Directory = " +
+                    System.getProperty("user.dir"));
+            File file = new File(saveInDirectory);
             boolean success = file.mkdirs();
             if (!success) {
                 // Directory creation failed
@@ -35,14 +37,23 @@ public class fileDownloader {
             }
             else{
                 System.out.println("\n Creating");
-                FileOutputStream fos = new FileOutputStream(directory+"/result.jpg");
-                System.out.println(directory+"/result.jpg");
+                FileOutputStream fos = new FileOutputStream(saveInDirectory+"/result.jpg");
+                System.out.println(saveInDirectory+"/result.jpg");
                 fos.write(response);
+                
+                //write tags
+                File tagsFile = new File(saveInDirectory+"/tags.txt");
+                FileWriter fileWriter = new FileWriter(tagsFile);
+        		fileWriter.write(jsonTags);
+        		fileWriter.flush();
+        		fileWriter.close();
+                
                 fos.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return saveInDirectory;   
     }
 }
 

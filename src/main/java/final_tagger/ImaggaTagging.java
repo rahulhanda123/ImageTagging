@@ -22,6 +22,7 @@ public class ImaggaTagging {
 				    .asJson();
 
 				    //Object jsonResponse = response.getBody().getObject();
+					//System.out.println("Inside gettags ;"+response.getBody().toString());
 				    return response.getBody().toString();
 	}
 
