@@ -8,8 +8,11 @@ public class ImaggaTagging {
 
 	public String getTags(String json) {
 
-		// System.out.println(json);
+		 System.out.println(json);
 		if (json.isEmpty()){
+			return json;
+		}
+		if(json.indexOf("{\"confidence")== -1){
 			return json;
 		}
 		String s = json.substring(json.indexOf("{\"confidence"),

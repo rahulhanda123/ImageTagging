@@ -38,8 +38,9 @@ public class SampleServer extends HttpServlet {
         System.out.println("Trying to get tags");
 		String jsonObject="";
 		try {
-			jsonObject = tagger.getImageTags(url.get("URL"));
 			downloader.downloadImage(searchQuery, urlName, jsonObject);
+			jsonObject = tagger.getImageTags(url.get("URL"));
+			
 		} catch (UnirestException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
