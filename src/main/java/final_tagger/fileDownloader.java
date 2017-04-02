@@ -1,5 +1,6 @@
 package final_tagger;
 import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.URL;
 
 
@@ -19,15 +20,18 @@ public class fileDownloader {
             File file = new File(saveInDirectory);
             boolean success = file.mkdirs();
             
-            
-
-            
             if (!success) {
                 // Directory creation failed
                 System.out.println("\n Not creating");
             }
             else{
-            	InputStream in = new BufferedInputStream(url.openStream());
+
+
+            	HttpURLConnection httpcon = (HttpURLConnection) url.openConnection();
+                httpcon.addRequestProperty("User-Agent", "Mozilla/4.0");
+
+                InputStream in = httpcon.getInputStream();
+            	//InputStream in = new BufferedInputStream(url.openStream());
                 
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
                 byte[] buf = new byte[8192];

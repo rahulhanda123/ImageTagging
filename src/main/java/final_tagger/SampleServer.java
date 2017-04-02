@@ -46,13 +46,12 @@ public class SampleServer extends HttpServlet {
 		}
 		System.out.println("outside tags :"+jsonObject);
 		
-		
         // get response writer
         PrintWriter writer = response.getWriter();
         String htmlRespone = "<html>";
-        htmlRespone += "<h2>Your urlquery is: " + "The first google image for given query is :" + "</h2><br/>";      
+        htmlRespone += "<h2>" + "The first google image for given query is :" + "</h2><br/>";      
         htmlRespone += "<img src='" + "/final_tagger/image?imagequery="+searchQuery+ "' height=\"300\" width=\"300\"/><br/>";
-        htmlRespone += "<div>"+jsonObject+"</div>";
+        htmlRespone += "<div> <h3>The Tags for the above image are :</h3></br><h4>"+jsonObject+"</h4></div>";
         htmlRespone += "</html>";
          
         // return response
