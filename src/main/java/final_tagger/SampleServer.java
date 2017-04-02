@@ -27,15 +27,11 @@ public class SampleServer extends HttpServlet {
         // read form fields
         String searchQuery = request.getParameter("imagequery");
          
-        System.out.println("username: " + searchQuery);
-       // System.out.println("password: " + password);
- 
-        // do some processing here...
-        
+        //get first image url
         Map<String, String> url = parser.getImageValues(searchQuery);
         String urlName = url.get("URL");
         
-        System.out.println("Trying to get tags");
+        
 		String jsonObject="";
 		try {
 			downloader.downloadImage(searchQuery, urlName, jsonObject);
@@ -45,7 +41,7 @@ public class SampleServer extends HttpServlet {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		System.out.println("outside tags :"+jsonObject);
+		
 		
         // get response writer
         PrintWriter writer = response.getWriter();
