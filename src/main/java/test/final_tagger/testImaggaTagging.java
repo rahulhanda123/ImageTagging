@@ -31,8 +31,6 @@ public class testImaggaTagging {
 
 			// String testString = is.toString();
 		}
-		System.out.println("from text "+s);
-		System.out.println("from method "+Itag.getImageTags("http://media.gq.com/photos/56e867a9239f13cf5b2ba2d8/master/pass/david-beckham-gq-0416-cover-sq.jpg"));
 		assertTrue((s)
 				.contains(Itag
 						.getImageTags("http://media.gq.com/photos/56e867a9239f13cf5b2ba2d8/master/pass/david-beckham-gq-0416-cover-sq.jpg")));
